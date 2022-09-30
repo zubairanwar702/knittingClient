@@ -1,0 +1,171 @@
+<div class="title">Manage Stock Shipped</div>
+<div class="container">
+    
+    <div>
+        <div *ngIf="saved" class="alert alert-success">Stock Received Add successfully.</div>
+        <div *ngIf="update" class="alert alert-success">Record update successfully.</div>
+        <div *ngIf="deleted" class="alert alert-success">Record Deleted successfully.</div>
+    </div>
+    <div>
+        <div>
+            <form [formGroup]="stockinForm" class="stockinForm" (ngSubmit)="Save()">
+                <div class="formGroup row">
+                    <label for="Name" class="form-label col-sm-12 col-md-2">Business Person Name:</label>
+                    <div class="col-sm-12  col-md-10">
+                        <select  class="form-control form-select" formControlName="businessPersonId">
+                            <option  value="">Select Category</option>
+                            <option *ngFor="let ls of bunisssPersonList" value={{ls.id}}> {{ls.name}}</option>
+                          </select>
+                    </div>
+                    <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['businessPersonId'].errors && submitted && form['businessPersonId'].errors['required']">
+                        Please select business person </div>
+                </div>
+                <div class="formGroup row">
+                    <label for="Address" class="form-label col-sm-12 col-md-2">Shipping Date:</label>
+                    <!-- <div class="col-sm-12  col-md-6"> <input type="text" class="form-control" id="Address" formControlName="receivedDate" /></div> -->
+                    <div class="col-sm-12  col-md-10"><input  type="text"
+                    placeholder="Datepicker"
+                    class="form-control" 
+                    readonly
+                    formControlName="dateReceived"
+                    bsDatepicker></div>
+                    <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['dateReceived'].errors && submitted && form['dateReceived'].errors['required']">
+                        Pleae enter date received</div>
+                </div>
+                <div class="formGroup row">
+                    <label for="Address" class="form-label col-sm-12 col-md-2">Cloth Type:</label>
+                    <div class="col-sm-12  col-md-10"> <input type="text" class="form-control" id="varityName" formControlName="varityType" /></div>
+                    <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['varityType'].errors && submitted && form['varityType'].errors['required']">Please enter the cloth type to manufacture</div>
+                </div>
+                <div class="formGroup row">
+                    <label for="Address" class="form-label col-sm-12 col-md-2">Number of Roles out:</label>
+                    <div class="col-sm-12  col-md-10"> <input type="text" [pattern]="numberonly" (keyup)="CalculateTotal()" class="form-control" id="Address" formControlName="boxes" /></div>
+                    <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['boxes'].errors && submitted && form['boxes'].errors['required']">Pleaes enter total
+                        boxes received</div>
+                        <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['boxes'].errors && submitted && form['boxes'].errors['pattern']">Pleae Enter number only</div>
+                </div>
+                <div class="formGroup row">
+                    <label for="Address" class="form-label col-sm-12 col-md-2">weight Per Role:</label>
+                    <div class="col-sm-12  col-md-10"><input type="text" (keyup)="CalculateTotal()" [pattern]="numberWithDecimal" class="form-control" id="Address" formControlName="weightPerBox" /></div>
+                    <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['weightPerBox'].errors && submitted && form['weightPerBox'].errors['required']">
+                        Please enter weight per box</div>
+                        <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                        *ngIf="form['weightPerBox'].errors && submitted && form['weightPerBox'].errors['pattern']">Pleae Enter number only</div>
+                </div>
+                <div class="formGroup row">
+                     <label for="Address" class="form-label col-sm-12 col-md-2">Total weight:</label>
+                     <div class="col-sm-12  col-md-10"><input type="text" [(ngModel)]="totalWeight" [pattern]="numberWithDecimal" class="form-control" id="Address" formControlName="totalWeight" /></div>
+                     <div class="error-message offset-md-2 col-sm-12 col-md-10"
+                     *ngIf="form['totalWeight'].errors && submitted && form['totalWeight'].errors['required']">
+                     Please enter total weight</div>
+                </div>
+                <div class="formGroup row">
+                    <label for="Address" class="form-label col-sm-12 col-md-2">Description:</label>
+                    <div class="col-sm-12  col-md-10"><input type="text" class="form-control" id="Address" formControlName="description" /></div>
+                </div>
+                <div class="formGroup row">
+                    <div class="col-sm-12 offset-md-2  col-md-10 d-grid gap-2"><button type="submit" class="btn btn-primary">Submit</button></div>
+                </div>
+            </form>
+        </div>
+       
+        <div  *ngIf="records">
+            <div style="border-top: 1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-weight:800;padding:10px;font-size:22px;margin:40px 0 40px 0">
+                List of Stock Shipped
+            </div>
+            <div class="table-responsive">
+            <table datatable [dtOptions]="dtOptions"  class="row-border hover">
+            </table>
+         </div>
+          </div>
+    </div>
+</div>
+<ng-template #modalData let-modal>
+    <div class="modal-header">
+      <h4 class="modal-title" id="modal-basic-title">Edit Business Person information</h4>
+      <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">×</span>
+      </button>
+    </div>
+    <div class="modal-body">
+        <form [formGroup]="stockinEditForm" (ngSubmit)="UpdateRecord()">
+            <div class="formGroup row">
+                <label for="Name" class="form-label col-12">Name:</label>
+                <div class="col-12">
+                    <select  class="form-control form-select" formControlName="businessPersonId">
+                        <option  value="">Select Category</option>
+                        <option *ngFor="let ls of bunisssPersonList" value={{ls.id}}> {{ls.name}}</option>
+                      </select>
+                </div>
+                <div class="error-message col-12"
+                    *ngIf="editForm['businessPersonId'].errors && updated && editForm['businessPersonId'].errors['required']">
+                    Please select business person </div>
+            </div>
+            <div class="formGroup row">
+                <label for="Address" class="form-label col-12">Date Received:</label>
+                <!-- <div class="col-sm-12  col-md-6"> <input type="text" class="form-control" id="Address" formControlName="receivedDate" /></div> -->
+                <div class="col-12"><input  type="text"
+                placeholder="Datepicker"
+                class="form-control" 
+                readonly
+                formControlName="dateReceived"
+                bsDatepicker></div>
+                <div class="error-message col-12"
+                    *ngIf="editForm['dateReceived'].errors && updated && editForm['dateReceived'].errors['required']">
+                    Pleae enter date received</div>
+            </div>
+            <div class="formGroup row">
+                <label for="Address" class="form-label col-12">Cloth Type:</label>
+                <div class="col-12"> <input type="text" class="form-control" id="varityName" formControlName="varityType" /></div>
+                <div class="error-message col-12"
+                    *ngIf="editForm['varityType'].errors && updated && editForm['varityType'].errors['required']">Please enter the cloth type to manufacture</div>
+            </div>
+            <div class="formGroup row">
+                <label for="Address" class="form-label col-12">Boxes Received:</label>
+                <div class="ccol-12"> <input type="text"  class="form-control" [pattern]="numberonly" id="Address" formControlName="boxes" /></div>
+                <div class="error-message col-12"
+                    *ngIf="editForm['boxes'].errors && updated && editForm['boxes'].errors['required']">Pleaes enter total
+                    boxes received</div>
+                    <div class="error-message col-12"
+                    *ngIf="editForm['boxes'].errors && updated && editForm['boxes'].errors['pattern']">Pleae Enter number only</div>
+            </div>
+            <div class="formGroup row">
+                <label for="Address" class="form-label col-12">weight Per Box:</label>
+                <div class="col-12"><input type="text" [pattern]="numberWithDecimal"  class="form-control" id="Address" formControlName="weightPerBox" /></div>
+                <div class="error-message col-12"
+                    *ngIf="editForm['weightPerBox'].errors && updated && editForm['weightPerBox'].errors['required']">
+                    Please enter weight per box</div>
+                    <div class="error-message col-12"
+                    *ngIf="editForm['weightPerBox'].errors && updated && editForm['weightPerBox'].errors['pattern']">Pleae Enter number only</div>
+            </div>
+            <div class="formGroup row">
+                 <label for="Address" class="form-label col-12">Total weight:</label>
+                 <div class="col-12"><input type="text"  [pattern]="numberWithDecimal" class="form-control" id="Address" formControlName="totalWeight" /></div>
+                 <div class="error-message col-12"
+                    *ngIf="editForm['totalWeight'].errors && updated && editForm['totalWeight'].errors['required']">
+                    Please enter total weight</div>
+                    <div class="error-message col-12"
+                        *ngIf="editForm['totalWeight'].errors && updated && editForm['totalWeight'].errors['pattern']">Pleae Enter number only</div>
+                      
+            </div>
+            <div class="formGroup row">
+                <label for="Address" class="form-label col-12">Description:</label>
+                <div class="col-12"><input type="text" class="form-control" id="Address" formControlName="description" /></div>
+            </div>
+            <div class="formGroup row">
+                <div class="col-12 d-grid gap-2"><button type="submit" class="btn btn-primary">Submit</button></div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-danger" (click)="modal.dismiss('Save click')">Close</button>
+    </div>
+  </ng-template>
+  
+  

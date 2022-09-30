@@ -1,0 +1,117 @@
+html,
+body {
+ height: 100%;
+ position: relative;
+}
+.navbackgoundColor{
+    background-color: #3c8dbc;
+}
+.sidebar > li > {
+    color: white;
+}
+
+.sidebar > li > a:hover{
+   background-color: red;
+   text-decoration: none;
+ }
+#footer {
+  position: absolute;
+ bottom: 0;
+ width: 100%;
+  background-color: #ddd;
+  }
+  
+  #page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  .hrmenu > li{
+    float:left;
+    margin-left:12px;
+    color: white;
+  }
+  .hrmenu > li > a
+  {
+    color: #ffffff;
+  }
+  
+.hrmenu > li > a:hover
+ {
+   background-color: red;
+   text-decoration: none;
+   display:block;
+ }
+
+ .wrap
+ {
+  background-color: #3c8dbc;
+ }
+ .lefnav {
+  margin: 0;
+  padding: 0;
+  width: 250px;
+  position:fixed;
+  background-color: #3c8dbc;
+  display:flex;
+  height: 100%;
+  overflow-y: auto;
+  left: 0;
+  top:0;
+  z-index:1;
+  padding-top: 60px;
+}
+.wrap
+{
+   padding-left: 225px;
+   background-color: #3c8dbc;
+}
+.content
+{
+  background-color: #ffffff;
+  padding:65px 20px;
+}
+.topnav
+{
+
+top: 0;
+right: 0;
+left: 0;
+z-index: 1039;
+position:fixed;
+
+}
+
+@media screen and (max-width: 1200px) {
+  .lefnav {
+    width: 100%;
+    height: auto;
+    position: relative;
+    background-color: #3c8dbc;
+  }
+  .lefnav a {float: left;}
+  .lefnav a {padding: 3px;}
+   div.wrap {padding-left: 0;}
+}
+.lefnav a {
+  display: block;
+  color:#ffffff;
+  padding: 10px;
+  text-decoration: none;
+}
+.lefnav a:hover
+{
+  background-color: red;
+}
+.overrideMargin
+{
+  margin-left: 0 !important;
+  margin-right:0 !important;
+}
+.wrapper {
+  
+ min-height: 100vh; /* will cover the 100% of viewport */
+ overflow: hidden;
+ display: block;
+ position: relative;
+ padding-bottom: 50px; /* height of your footer */
+}

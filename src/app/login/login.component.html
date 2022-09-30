@@ -1,0 +1,41 @@
+<form *ngIf="!showLoginForm" class="form-signin" >
+    <div style="margin-top:100px;" class="row">
+      <div  class="offset-md-4 offset-sm-0 col-sm-12 col-md-4 ">
+       <div style="border-radius:25px;padding:25px;border:1px solid #ddd;padding:25px;">
+          <h5 class="">Sign in</h5>
+           <div style="color:red;height:30px;text-align:center;">{{loginMessage}}</div>
+        
+           <form [formGroup]="LoginForm" (ngSubmit)="Login()">
+            <div class="formGroup">
+              <label for="Name" class="form-label">Name:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="userName"
+                formControlName="userName"
+              />
+              <div class="error-message" *ngIf="form['userName'].errors && submitted && form['userName'].errors['required']">Please enter business person name.</div>
+            </div>
+            <div class="formGroup">
+              <label for="Address" class="form-label">Address:</label>
+              <input
+                type="text"
+                class="form-control"
+                id="Address"
+                formControlName="password"
+              />
+              <div class="error-message" *ngIf="form['password'].errors && submitted && form['password'].errors['required']">Please enter business person address.</div>
+            </div>
+            <div class="formGroup row">
+              <div class="d-grid gap-2 col-12">
+                <button  type="submit" class="btn btn-primary">Submit</button>
+              </div>
+            
+            </div>
+          </form>
+             
+        
+       </div>
+     </div>
+   </div>
+ </form>
