@@ -1,0 +1,31 @@
+
+<div *ngIf="isLoggedIn$ | async as isLoggedIn">
+ <div  class="topnav" style="height:60px;background-color: #367fa9;text-align:right;">
+     <div style="padding:10px 10px 0 0 ;"> <button  style="color:white;"  class="btn btn-link" >Log out</button> </div>
+   </div>
+   <div  class="wrap">
+   <div class="lefnav">
+     <div  class="">
+         <a routerLink="AddBusinessPerson">
+         <span>1: Manage Business Person</span>
+       </a>
+       <a routerLink="AddStockin">
+        <span>2: Manage Stock Received</span>
+      </a>
+      <a routerLink="AddStockOut">
+        <span>2: Manage Stock Shipped</span>
+      </a>
+    </div>
+   </div>
+
+   
+    <div   class="content">
+      <block-ui>
+        <router-outlet > </router-outlet> 
+      </block-ui>
+   </div>
+   </div>
+  </div>
+  <div></div>
+   <app-login></app-login>
+  
