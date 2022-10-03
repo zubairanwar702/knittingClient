@@ -1,3 +1,4 @@
+<div *ngIf="isLoggedIn$ | async as isLoggedIn"   class="container">
 <form *ngIf="!showLoginForm" class="form-signin" >
     <div style="margin-top:100px;" class="row">
       <div  class="offset-md-4 offset-sm-0 col-sm-12 col-md-4 ">
@@ -19,7 +20,7 @@
             <div class="formGroup">
               <label for="Address" class="form-label">Address:</label>
               <input
-                type="text"
+                type="password"
                 class="form-control"
                 id="Address"
                 formControlName="password"
@@ -39,3 +40,4 @@
      </div>
    </div>
  </form>
+</div>

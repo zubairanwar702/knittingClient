@@ -1,4 +1,4 @@
 export const environment = {
   production: true,
-  apiEndPoint:"https://mcgillsapi.azurewebsites.net/api/"
+  apiEndPoint:"https://api.jasasports.com/api/"
 };

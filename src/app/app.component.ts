@@ -16,7 +16,10 @@ export class AppComponent {
      this.isLoggedIn$ = this.authService.isLoggedIn;
      this.isLoggedIn$.subscribe(val =>this.reponsce=val );
      this.showLoginForm=this.reponsce;
-     console.log(this.showLoginForm);
+    this.authService.Login();
   }
-
+  Logout()
+  {
+    this.authService.Logout();
+  }
 }

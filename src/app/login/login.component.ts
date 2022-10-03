@@ -16,7 +16,7 @@ export class LoginComponent implements OnInit {
   reponsce!:boolean;
   showLoginForm!:boolean;
   submitted!:false;
-  constructor(private router:Router,private route:ActivatedRoute,private authServices:AuthService) { }
+  constructor(private router:Router,private route:ActivatedRoute,private authService:AuthService) { }
 
   public LoginForm: FormGroup = new FormGroup({
     userName: new FormControl(''),
@@ -24,10 +24,10 @@ export class LoginComponent implements OnInit {
   })
   get form() { return this.LoginForm.controls; }
   ngOnInit(): void {
-    this.isLoggedIn$ = this.authServices.isLoggedIn;
-    this.isLoggedIn$.subscribe(val =>this.reponsce=val );
-    this.showLoginForm=this.reponsce;
-    console.log("from login"+this.showLoginForm);
+    this.isLoggedIn$ = this.authService.showLogin;
+    // this.isLoggedIn$.subscribe(val =>this.reponsce=val );
+    // this.showLoginForm=this.reponsce;
+    // console.log("from login"+this.showLoginForm);
   }
  Login()
  {
@@ -38,7 +38,7 @@ export class LoginComponent implements OnInit {
   if(userName=="pak" && password=="1234"){
     
     localStorage.setItem('login-token','zzzxxxoo')
-    this.authServices.Login();
+    this.authService.Login();
    
   }
   else {
