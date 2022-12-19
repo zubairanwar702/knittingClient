@@ -15,9 +15,13 @@ export class AddBusinessPersonComponent implements OnInit {
   displayStyle = "none";
   closeModal!: string;
   submitted = false;
-  saved=false;
+  showMessage=false;
+  message='';
   update=false;
   editMode=false;
+  updated=false;
+  nameAvailble=true;
+  nameAvailableEditMode= true;
   closebtn!:string;
   dtOptions: DataTables.Settings = {};
   records:any;
@@ -44,6 +48,7 @@ export class AddBusinessPersonComponent implements OnInit {
     this.GetList();
   }
   get form() { return this.businessForm.controls; }
+  get editForm() { return this.businessPersonEditForm.controls; }
   GetList()
   {
     this.blockUI.start();
@@ -68,7 +73,7 @@ export class AddBusinessPersonComponent implements OnInit {
 }
 AddRecord(){
   this.submitted=true;
-  this.saved=false;
+  this.showMessage=false;
   if(this.businessForm.valid)
   {
   this.blockUI.start();
@@ -78,25 +83,29 @@ AddRecord(){
         next: (responce:any) => {
      if(responce["message"]=='success'){
          this.businessForm.reset();
-         this.blockUI.stop();
-         this.saved=true;
+         this.showMessage=true;
+         this.message="New business person add successfully."
          this.submitted=false;
+         this.nameAvailble=true;
          //this.closebutton.nativeElement.click();
          this.modalService.dismissAll();
          this.GetList();
+     }
+     else if(responce["message"]=='NotAvailable'){
+       this.nameAvailble=false;
      }
         },
         error: (e) => {
           console.log(e);
         },
-        complete: () => {}
+        complete: () => { this.blockUI.stop();}
       });
     
   }
 }
 UpdateRecord(){
-  this.submitted=true;
-  this.saved=false;
+  this.updated=true;
+  this.showMessage=false;
   if(this.businessPersonEditForm.valid)
   {
   this.blockUI.start();
@@ -105,20 +114,24 @@ UpdateRecord(){
       .subscribe({
         next: (responce:any) => {
      if(responce["message"]=='success'){
-         this.businessForm.reset();
-         this.blockUI.stop();
+         this.businessPersonEditForm.reset();
          this.update=true;
-         this.submitted=false;
+         this.updated=false;
+         this.showMessage=true;
+         this.message="business person update successfully."
          //this.closebutton.nativeElement.click();
          this.modalService.dismissAll();
           this.GetList();
          
      }
+     else if(responce["message"]=='NotAvailable'){
+      this.nameAvailableEditMode=false;
+    }
         },
         error: (e) => {
           console.log(e);
         },
-        complete: () => {}
+        complete: () => {  this.blockUI.stop();}
       });
     // , error => {
     //    console.log(error);
@@ -141,8 +154,10 @@ UpdateRecord(){
     
     columns: [
       {
-        title: 'id',
-        data: 'id'
+        title: 'Row Number',
+        render: function(data, type, full, meta ) {
+          return  meta.row+1;
+        }
       },
     {
       title: 'Name',
@@ -153,6 +168,7 @@ UpdateRecord(){
       data: 'address'
     },
     {
+      title: 'Edit',
       render: function(data, type, item, meta) {
         return '<a class="btn edit btn-primary">Edit</i></a>';
       }

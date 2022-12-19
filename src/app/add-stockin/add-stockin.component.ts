@@ -17,9 +17,8 @@ export class AddStockinComponent implements OnInit {
   closeModal!: string;
   submitted = false;
   updated=false;
-  saved=false;
-  update=false;
-  deleted=false;
+  showMessage=false;
+  message='';
   editMode=false;
   stockList:any= [];
   bunisssPersonList:any=[];
@@ -90,8 +89,6 @@ export class AddStockinComponent implements OnInit {
         next: (responce:any) => {
      if(responce["message"]=='success'){
       this.records=responce["data"];
-      console.log(this.records);
-
       this.BindDataTable(this.records);
      }
         },
@@ -104,7 +101,6 @@ export class AddStockinComponent implements OnInit {
   BindDataTable(records:any)
   {
    this.dtOptions = {
- 
      pagingType: 'full_numbers',
      // paging: false,
      processing: true,
@@ -114,6 +110,10 @@ export class AddStockinComponent implements OnInit {
      data: records,
      search: false,
      columns: [
+      {
+        title: 'Invoice Number',
+        data: 'invoiceNumber'
+      },
      {
        title: 'Business Person Name',
        data: 'businessPersonName'
@@ -142,11 +142,13 @@ export class AddStockinComponent implements OnInit {
       }
     },
      {
+      title: 'Edit',
        render: function(data, type, item, meta) {
          return '<a class="btn edit btn-primary">Edit</i></a>';
        }
      },
      {
+      title: 'Delete',
       render: function(data, type, item, meta) {
         return '<a class="btn delete btn-danger">Delete</i></a>';
       }
@@ -174,8 +176,10 @@ export class AddStockinComponent implements OnInit {
        .subscribe({
          next: (responce:any) => {
       if(responce["message"]=='success'){
-        this.deleted=true;
-          this.GetStockReceivedList();
+        this.showMessage=true;
+        this.message="Yarn in deleted succesfully.";
+        this.submitted=false;
+        this.GetStockReceivedList();
       }
          },
          error: (e) => {
@@ -218,12 +222,12 @@ export class AddStockinComponent implements OnInit {
    var dateReceived= this.stockinForm.value["receivedDate"];
    var convertDate=this.datePipe.transform(dateReceived, 'MM-dd-yyyy hh:mm a');
    this.stockinForm.value["receivedDate"]=convertDate;
-    this.AddRecord();
+   this.stockinForm.value["transactionType"]='in';
+   this.AddRecord();
   }
   AddRecord(){
-    
+    console.log(this.stockinForm.value);
     this.submitted=true;
-    this.saved=false;
     if(this.stockinForm.valid)
     {
     this.blockUI.start();
@@ -234,10 +238,9 @@ export class AddStockinComponent implements OnInit {
        if(responce["message"]=='success'){
            this.stockinForm.reset();
            this.blockUI.stop();
-           this.saved=true;
-           this.update=false;
+           this.showMessage=true;
+           this.message="Yarn in added succesfully.";
            this.submitted=false;
-           this.deleted=false;
            //this.closebutton.nativeElement.click();
            this.GetStockReceivedList();
        }
@@ -252,8 +255,7 @@ export class AddStockinComponent implements OnInit {
   }
   UpdateRecord(){
     this.updated=true;
-    this.saved=false;
-    console.log('updatd outside')
+    //console.log('updatd outside')
     if(this.stockinEditForm.valid)
     {
       console.log('updatd inseid')
@@ -268,10 +270,9 @@ export class AddStockinComponent implements OnInit {
        if(responce["message"]=='success'){
            this.stockinForm.reset();
            this.blockUI.stop();
-           this.update=true;
            this.updated=false;
-           this.saved=false;
-           this.deleted=false;
+           this.showMessage=true;
+           this.message="Stock received update succesfully.";
            this.modelServices.dismissAll();
            this.GetStockReceivedList();
            //this.closebutton.nativeElement.click();

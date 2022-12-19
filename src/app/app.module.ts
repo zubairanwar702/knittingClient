@@ -14,13 +14,18 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DatePipe } from '@angular/common';
 import { AddStockoutComponent } from './add-stockout/add-stockout.component';
 import { LoginComponent } from './login/login.component';
+import { LedgerComponent } from './ledger/ledger.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { GenerateBillComponent } from './generate-bill/generate-bill.component'
 @NgModule({
   declarations: [
     AppComponent,
     AddBusinessPersonComponent,
     AddStockinComponent,
     AddStockoutComponent,
-    LoginComponent
+    LoginComponent,
+    LedgerComponent,
+    GenerateBillComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +37,8 @@ import { LoginComponent } from './login/login.component';
     NgbModule,
     BsDatepickerModule.forRoot(),
     BrowserAnimationsModule,
-    FormsModule
+    FormsModule,
+    NgSelectModule
   ],
   providers: [DatePipe],
   bootstrap: [AppComponent]

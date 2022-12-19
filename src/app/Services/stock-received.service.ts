@@ -14,6 +14,14 @@ export class StockReceivedService {
    {
      return this.http.post(this.baseUri+'Stock/AddStockReceived',stockReceived);
    }
+   AddStockout(stockout:any)
+   {
+    return this.http.post(this.baseUri+'Stock/AddStockout',stockout);
+   }
+   UpdateStockout(stockout:any)
+   {
+    return this.http.post(this.baseUri+'Stock/UpdateStockout',stockout);
+   }
    UpdateStockReceived(stockReceived:any)
    {
      return this.http.post(this.baseUri+'Stock/UpdateStockReceived',stockReceived);

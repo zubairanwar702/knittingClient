@@ -1,9 +1,9 @@
-<div class="title">Manage Stock Received</div>
+<div class="title">Manage Yarn in</div>
 <div class="container">
     <div>
-        <div *ngIf="saved" class="alert alert-success">Stock Received Add successfully.</div>
-        <div *ngIf="update" class="alert alert-success">Record update successfully.</div>
-        <div *ngIf="deleted" class="alert alert-success">Record Deleted successfully.</div>
+        <div *ngIf="showMessage" class="alert alert-success">
+            <div>{{message}}</div>
+          </div>
     </div>
     <div>
         <div>
@@ -12,7 +12,7 @@
                     <label for="Name" class="form-label col-sm-12 col-md-2">Name:</label>
                     <div class="col-sm-12  col-md-10">
                         <select  class="form-control form-select" formControlName="businessPersonId">
-                            <option  value="">Select Category</option>
+                            <option  value="">Select Business Person Name</option>
                             <option *ngFor="let ls of bunisssPersonList" value={{ls.id}}> {{ls.name}}</option>
                           </select>
                     </div>
@@ -34,10 +34,10 @@
                         Pleae enter date received</div>
                 </div>
                 <div class="formGroup row">
-                    <label for="Address" class="form-label col-sm-12 col-md-2">Cloth Type:</label>
+                    <label for="Address" class="form-label col-sm-12 col-md-2">Yarn Type:</label>
                     <div class="col-sm-12  col-md-10"> <input type="text" class="form-control" id="varityName" formControlName="varityType" /></div>
                     <div class="error-message offset-md-2 col-sm-12 col-md-10"
-                        *ngIf="form['varityType'].errors && submitted && form['varityType'].errors['required']">Please enter the cloth type to manufacture</div>
+                        *ngIf="form['varityType'].errors && submitted && form['varityType'].errors['required']">Please enter the yarn type to manufacture</div>
                 </div>
                 <div class="formGroup row">
                     <label for="Address" class="form-label col-sm-12 col-md-2">Boxes Received:</label>
@@ -63,8 +63,6 @@
                      <div class="error-message offset-md-2 col-sm-12 col-md-10"
                      *ngIf="form['totalWeight'].errors && submitted && form['totalWeight'].errors['required']">
                      Please enter total weight</div>
-                     
-                      
                 </div>
                 <div class="formGroup row">
                     <label for="Address" class="form-label col-sm-12 col-md-2">Description:</label>
@@ -78,7 +76,7 @@
        
         <div  *ngIf="records">
             <div style="border-top: 1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-weight:800;padding:10px;font-size:22px;margin:40px 0 40px 0">
-                List of Stock Received
+                List of Yarn in
             </div>
             <div class="table-responsive">
             <table datatable [dtOptions]="dtOptions"  class="row-border hover">
@@ -89,7 +87,7 @@
 </div>
 <ng-template #modalData let-modal>
     <div class="modal-header">
-      <h4 class="modal-title" id="modal-basic-title">Edit Business Person information</h4>
+      <h4 class="modal-title" id="modal-basic-title">Edit Yarn in</h4>
       <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
         <span aria-hidden="true">×</span>
       </button>
@@ -100,7 +98,7 @@
                 <label for="Name" class="form-label col-12">Name:</label>
                 <div class="col-12">
                     <select  class="form-control form-select" formControlName="businessPersonId">
-                        <option  value="">Select Category</option>
+                        <option  value="">Select Business Person Name</option>
                         <option *ngFor="let ls of bunisssPersonList" value={{ls.id}}> {{ls.name}}</option>
                       </select>
                 </div>
@@ -122,10 +120,10 @@
                     Pleae enter date received</div>
             </div>
             <div class="formGroup row">
-                <label for="Address" class="form-label col-12">Cloth Type:</label>
+                <label for="Address" class="form-label col-12">Yarn Type:</label>
                 <div class="col-12"> <input type="text" class="form-control" id="varityName" formControlName="varityType" /></div>
                 <div class="error-message col-12"
-                    *ngIf="editForm['varityType'].errors && updated && editForm['varityType'].errors['required']">Please enter the cloth type to manufacture</div>
+                    *ngIf="editForm['varityType'].errors && updated && editForm['varityType'].errors['required']">Please enter the Yarn type to manufacture</div>
             </div>
             <div class="formGroup row">
                 <label for="Address" class="form-label col-12">Boxes Received:</label>

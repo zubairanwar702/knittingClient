@@ -10,3 +10,4 @@
     border-bottom:1px solid #ddd;
     font-weight:bold;
   }
+  .modal-body {max-height:80vh;overflow-y: scroll;}

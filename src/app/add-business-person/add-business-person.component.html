@@ -1,9 +1,13 @@
 <div class="title">Manage Business Person</div>
 <div class="container">
   <div>
-    <div *ngIf="saved" class="alert alert-success">New business person add successfully.</div>
-    <div *ngIf="update" class="alert alert-success">Record update successfully.</div>
+    <div class="alert alert-danger" *ngIf="!nameAvailble">Business person name all ready in used. please enter a differnt name</div>
   </div>
+  <div>
+    <div *ngIf="showMessage" class="alert alert-success">
+        <div>{{message}}</div>
+      </div>
+</div>
   <div >
     <div>
       <form [formGroup]="businessForm" (ngSubmit)="save()">
@@ -39,6 +43,9 @@
     </div>
   </div>
   <div style="margin-top:20px;" *ngIf="records">
+    <div style="border-top: 1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-weight:800;padding:10px;font-size:22px;margin:40px 0 40px 0">
+      List of Business Persons
+  </div>
     <div class="table-responsive">
     <table datatable [dtOptions]="dtOptions"  class="row-border hover">
     </table>
@@ -53,6 +60,7 @@
     </button>
   </div>
   <div class="modal-body">
+    <div class="alert alert-danger" *ngIf="!nameAvailableEditMode">Business person name all ready in used. please enter a differnt name</div>
     <form [formGroup]="businessPersonEditForm" (ngSubmit)="UpdateRecord()">
       <div class="formGroup">
         <label for="Name" class="form-label">Name:</label>
@@ -62,7 +70,7 @@
           id="Name"
           formControlName="Name"
         />
-        <div class="error-message" *ngIf="form['Name'].errors && submitted && form['Name'].errors['required']">Please enter business person name.</div>
+        <div class="error-message" *ngIf="editForm['Name'].errors && updated && editForm['Name'].errors['required']">Please enter business person name.</div>
       </div>
       <div class="formGroup">
         <label for="Address" class="form-label">Address:</label>
@@ -72,7 +80,7 @@
           id="Address"
           formControlName="Address"
         />
-        <div class="error-message" *ngIf="form['Address'].errors && submitted && form['Address'].errors['required']">Please enter business person address.</div>
+        <div class="error-message" *ngIf="editForm['Address'].errors && updated && editForm['Address'].errors['required']">Please enter business person address.</div>
       </div>
       <div class="formGroup row">
         <div class="d-grid gap-2 col-12">

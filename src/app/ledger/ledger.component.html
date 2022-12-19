@@ -1,0 +1,23 @@
+<div class="title">Business Person Ledger</div>
+<div class="container">
+<!-- <ng-select  (change)="changeFn(businessPersonList.name)" #personName [items]="businessPersonList"  appendTo="body"  placeholder="Select Business Name"></ng-select> -->
+<ng-select placeholder="Select Business Name" [(ngModel)]="selectList">
+    <ng-option *ngFor="let list of businessPersonList" [value]="list.id">{{list.name}}</ng-option>
+ </ng-select>
+<div class="d-grid gap-2"  style="margin-top: 25px;" ><button (click)="LoadLedger()"  class="btn btn-primary">Search</button></div> 
+<div  *ngIf="records">
+    <div style="border-top: 1px solid #ddd;border-bottom:1px solid #ddd;text-align:center;font-weight:800;padding:10px;font-size:22px;margin:40px 0 40px 0">
+        Ledger of {{name}}
+    </div>
+    <div class="table-responsive">
+    <table datatable [dtOptions]="dtOptions"  class="row-border hover">
+    </table>
+ </div>
+ <div style="text-align:right;margin-top:25px;;">
+    <h5>Total Receivable payment: {{totalPayment}}</h5>  
+   </div>
+   <div style="text-align:right;margin-top:10px;">
+    <h5>Total Received Payment: {{totalPaymentReceived}}</h5> 
+   </div>
+  </div>
+</div>

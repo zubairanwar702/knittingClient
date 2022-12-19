@@ -21,4 +21,10 @@ export class BusinessPersonService {
     {
       return this.http.get(this.baseUri+'Business/GetBusinessPerson');
     }
+    GetBusinessPersonLedger(businessPersonId:any)
+    {
+      return this.http.get(this.baseUri+'Business/GetBusinessPersonLedger?businessPersonId='+businessPersonId+'');
+    }
+
+   
 }
